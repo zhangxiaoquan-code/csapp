@@ -1,0 +1,23 @@
+#add
+112d:	55                   	push   %rbp
+112e:	48 89 e5             	mov    %rsp,%rbp
+1131:	89 7d fc             	mov    %edi,-0x4(%rbp)
+1134:	89 75 f8             	mov    %esi,-0x8(%rbp)
+1137:	8b 55 fc             	mov    -0x4(%rbp),%edx
+113a:	8b 45 f8             	mov    -0x8(%rbp),%eax
+113d:	01 d0                	add    %edx,%eax
+113f:	5d                   	pop    %rbp
+1140:	c3                   	retq
+#main
+1145:	55                   	push   %rbp
+1146:	48 89 e5             	mov    %rsp,%rbp
+1149:	48 83 ec 10          	sub    $0x10,%rsp
+114d:	89 7d fc             	mov    %edi,-0x4(%rbp)
+1150:	48 89 75 f0          	mov    %rsi,-0x10(%rbp)
+1154:	be 06 00 00 00       	mov    $0x6,%esi
+1159:	bf 05 00 00 00       	mov    $0x5,%edi
+115e:	e8 c6 ff ff ff       	callq  112d
+1163:	b8 00 00 00 00       	mov    $0x0,%eax
+1168:	c9                   	leaveq 
+1169:	c3                   	retq   
+116a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
