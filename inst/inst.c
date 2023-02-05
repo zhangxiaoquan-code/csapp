@@ -15,14 +15,15 @@ char str_instl[OP_MAX][6] =
     "mov","add","sub", "pop", "push", "call", "ret", "cmp", "jne", "je", "jump", "inc", "leave","nopw"
 };
 
-operator_type get_inst(operator_t *src, operator_t *dst)
+operator_type get_inst(operator_t **src, operator_t **dst)
 {
     static int index = 0;
-    src = &(inst[index].src);
-    dst = &(inst[index].dst);
-    index ++;
+    //memcpy(src, &inst[index].src, sizeof(operator_t));
+    //memcpy(dst, &inst[index].dst, sizeof(operator_t));
+    *src = &inst[index].src;
+    *dst = &inst[index].dst;
 
-    return inst[index].op;
+    return inst[index++].op;
 }
 
 static int para_operate(char *str_inst, int inst_count)
@@ -73,7 +74,10 @@ static int para_operate_obj(char *str_inst, int *inst_count)
             /* code */
             break;
         case ADD:
-            /* code */
+            inst[inst_index].src.type = REGISTER;
+            inst[inst_index].dst.type = REGISTER;
+            //inst[inst_count].src.op.reg=cpu[0].cpu_reg.rax;
+            //inst[inst_count].dst.op.reg=cpu[0].cpu_reg.rax;
             break;
         case SUB:
             /* code */
@@ -86,6 +90,7 @@ static int para_operate_obj(char *str_inst, int *inst_count)
         case PUSH:
             inst[inst_index].src.type = REGISTER;
             inst[inst_index].dst.type = EMPTY;
+            //inst[inst_count].src.op.reg = reg;
             
             break;
         case CALL:
@@ -126,7 +131,6 @@ INVALID_INST:
 
 static int para_inst(char *buf, int count)
 {
-    //reg_debug("%s", buf);
     char *str_inst = NULL;
     static int inst_count = 0;
 

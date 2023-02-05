@@ -35,6 +35,7 @@ void pop_handler(operator_t *src, operator_t *dst, cpu_t *cpu)
 
 void add_handler(operator_t *src, operator_t *dst, cpu_t *cpu)
 {
+    dst->op.reg = dst->op.reg + src->op.reg;
     increan_pc(cpu);
 }
 
@@ -76,8 +77,8 @@ void init_inst_set(void)
 
 void rsa_cycle(void)
 {
-    operator_t src;
-    operator_t dst;
+    operator_t *src;
+    operator_t *dst;
     operator_type inst_index;
 
     for(int i = 0; i < 100; i++)
@@ -85,7 +86,7 @@ void rsa_cycle(void)
         /// read instruct 
         inst_index = get_inst(&src, &dst);
         if (instruct_handler[inst_index].handler != NULL)
-            instruct_handler[inst_index].handler(&src,&dst,&cpu[0]);
+            instruct_handler[inst_index].handler(src,dst,&cpu[0]);
     }
     return;
 }

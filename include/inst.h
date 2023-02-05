@@ -64,6 +64,6 @@ typedef struct inst
 
 int match(void);
 int read_inst(char *inst_file);
-operator_type get_inst(operator_t *src, operator_t *dst);
+operator_type get_inst(operator_t **src, operator_t **dst);
 
 #endif // !REGISTER_H
